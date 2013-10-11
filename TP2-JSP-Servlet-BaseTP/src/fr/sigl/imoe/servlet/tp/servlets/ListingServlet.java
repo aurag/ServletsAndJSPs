@@ -1,6 +1,7 @@
 package fr.sigl.imoe.servlet.tp.servlets;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,8 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.sigl.imoe.servlet.tp.bo.Evenement;
+import fr.sigl.imoe.servlet.tp.bo.TypeEvenement;
 import fr.sigl.imoe.servlet.tp.dao.DAOFactory;
 import fr.sigl.imoe.servlet.tp.dao.EvenementDAO;
+import fr.sigl.imoe.servlet.tp.dao.TypeEvenementDAO;
 import fr.sigl.imoe.servlet.tp.dao.hibernate.HibernateDAOFactory;
 
 /**
@@ -22,7 +25,7 @@ import fr.sigl.imoe.servlet.tp.dao.hibernate.HibernateDAOFactory;
  */
 @WebServlet(
         name = "ListingServlet",
-        urlPatterns = {"/listing", "/show/*", "/edit/*", "/delete/*", "/add"}
+        urlPatterns = {"/listing", "/show", "/edit", "/delete/*", "/add", "/addEvent", "/editEvent"}
 )
 public class ListingServlet extends HttpServlet {
     /**
@@ -47,7 +50,7 @@ public class ListingServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String projectName = "/TP2-JSP-Servlet-BaseTP/";
 		String shortURI = request.getRequestURI().substring(projectName.length());
-		
+		System.out.println("URI : " + shortURI);
 		try {
 			if (shortURI.equals("listing"))
 			{
@@ -66,34 +69,33 @@ public class ListingServlet extends HttpServlet {
 			
 			if (shortURI.startsWith("show"))
 			{
-				String id = shortURI.substring("show/".length());
+				String id = request.getParameter("id");
 				DAOFactory DAOFact = DAOFactory.getDAOFactory();
 				EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
-				List<Evenement> events = EvenementDAO.getEvenements();
-				for (Evenement e : events) {
-					System.out.println(e.getTitre());
-				}
-				request.setAttribute("eventList", events);
+				Evenement event = EvenementDAO.getEvenement(id);
+				request.setAttribute("event", event);
+				DAOFact.close();
 		
-				RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/accueil.jsp");
+				RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/show.jsp");
 				dispacher.forward(request, response);
 				DAOFact.close();
 			}
 			
-			if (shortURI.startsWith("edit"))
+			if (shortURI.equals("edit"))
 			{
-				String id = shortURI.substring("edit/".length());
+				String id = request.getParameter("id");
 				DAOFactory DAOFact = DAOFactory.getDAOFactory();
 				EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
-				List<Evenement> events = EvenementDAO.getEvenements();
-				for (Evenement e : events) {
-					System.out.println(e.getTitre());
-				}
-				request.setAttribute("eventList", events);
+				Evenement event = EvenementDAO.getEvenement(id);
+				request.setAttribute("event", event);
+				
+				TypeEvenementDAO typeEvenementDAO = DAOFact.getTypeEvenementDAO();		
+				List<TypeEvenement> typeList = typeEvenementDAO.getTypesEvenements();
+		        request.setAttribute("typeList", typeList);
+		        DAOFact.close();
 		
-				RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/accueil.jsp");
+				RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/edit.jsp");
 				dispacher.forward(request, response);
-				DAOFact.close();
 			}
 			
 			if (shortURI.startsWith("delete"))
@@ -112,7 +114,60 @@ public class ListingServlet extends HttpServlet {
 			
 			if (shortURI.equals("add"))
 			{
-				response.sendRedirect(projectName + "add.jsp");
+				DAOFactory DAOFact = DAOFactory.getDAOFactory();
+				TypeEvenementDAO typeEvenementDAO = DAOFact.getTypeEvenementDAO();		
+				List<TypeEvenement> typeList = typeEvenementDAO.getTypesEvenements();
+		        request.setAttribute("typeList", typeList);
+		        DAOFact.close();
+
+				RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/add.jsp");
+				dispacher.forward(request, response);
+			}
+			
+			if (shortURI.equals("addEvent"))
+			{
+				String title = request.getParameter("title");
+				String type = request.getParameter("type");
+				Timestamp start_date = Timestamp.valueOf(request.getParameter("start_date"));
+				Timestamp end_date = Timestamp.valueOf(request.getParameter("end_date"));
+				String description = request.getParameter("description");
+				
+				DAOFactory DAOFact = DAOFactory.getDAOFactory();
+				EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
+				TypeEvenementDAO typeEvenementDAO = DAOFact.getTypeEvenementDAO();
+				Evenement event = new Evenement();
+				event.setTitre(title);
+				event.setType(typeEvenementDAO.getTypeEvenement(type));
+				event.setDateDebut(start_date);
+				event.setDateFin(end_date);
+				event.setDescription(description);
+				EvenementDAO.insertEvenement(event);
+				DAOFact.close();
+				response.sendRedirect(projectName + "listing");
+			}
+			
+			if (shortURI.equals("editEvent"))
+			{
+				String title = request.getParameter("title");
+				String type = request.getParameter("type");
+				Timestamp start_date = Timestamp.valueOf(request.getParameter("start_date"));
+				Timestamp end_date = Timestamp.valueOf(request.getParameter("end_date"));
+				String description = request.getParameter("description");
+				
+				DAOFactory DAOFact = DAOFactory.getDAOFactory();
+				EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
+				TypeEvenementDAO typeEvenementDAO = DAOFact.getTypeEvenementDAO();
+				Evenement event = EvenementDAO.getEvenement(request.getParameter("id"));
+				event.setTitre(title);
+				event.setType(typeEvenementDAO.getTypeEvenement(type));
+				event.setDateDebut(start_date);
+				event.setDateFin(end_date);
+				event.setDescription(description);
+				EvenementDAO.updateEvenement(event);
+				DAOFact.close();
+				
+				
+				response.sendRedirect(projectName + "listing");
 			}
 		
 		} catch (Exception e) {
