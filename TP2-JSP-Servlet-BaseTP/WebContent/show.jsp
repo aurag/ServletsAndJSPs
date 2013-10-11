@@ -16,3 +16,5 @@
 			Description : ${event.description}
 	</body>
 </html>
+
+<%@include file="includes/footer.jsp" %>

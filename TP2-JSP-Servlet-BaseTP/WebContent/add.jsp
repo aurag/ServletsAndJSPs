@@ -8,7 +8,7 @@
 <title>Création d'un nouvel évènement</title>
 </head>
 	<body>
-		size : ${typeList.size()}
+		<h1>Création d'un nouvel évènement</h1>
 		<form name="registration" action="addEvent" method="Post"> 
 			Titre: <input type="text" name="title"> <br /> 
 			Type: 
@@ -24,3 +24,5 @@
 		</form>
 	</body>
 </html>
+
+<%@include file="includes/footer.jsp" %>

@@ -50,16 +50,13 @@ public class ListingServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String projectName = "/TP2-JSP-Servlet-BaseTP/";
 		String shortURI = request.getRequestURI().substring(projectName.length());
-		System.out.println("URI : " + shortURI);
 		try {
 			if (shortURI.equals("listing"))
 			{
 				DAOFactory DAOFact = DAOFactory.getDAOFactory();
 				EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
 				List<Evenement> events = EvenementDAO.getEvenements();
-				for (Evenement e : events) {
-					System.out.println(e.getTitre());
-				}
+
 				request.setAttribute("eventList", events);
 		
 				RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/accueil.jsp");
