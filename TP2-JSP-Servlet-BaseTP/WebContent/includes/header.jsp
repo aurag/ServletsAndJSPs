@@ -5,6 +5,24 @@
 <head>
 	<title>Gestionnaire d'événements.</title>
 	<link rel=stylesheet type="text/css" href="css/style.css">
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"> 
+
+	<link type="text/css" rel="stylesheet" href="jquery-ui-1.10.3.custom.css"/>
+	<link type="text/css" rel="stylesheet" href="jquery-ui-1.10.3.custom.min.css"/>
+<script type="text/javascript" src="jquery-1.9.1.js"></script>
+<script type="text/javascript" src="jquery-ui-1.10.3.custom.js"></script>
+<script type="text/javascript" src="jquery-ui-1.10.3.custom.min.js"></script>
+
+
+	<link href="bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+	<script type="text/javascript" src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	
+	 <script src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    
+    <script src="bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js" charset="UTF-8"></script>
+
+    
+    
 </head>
 <body background="img/background.jpg" bottommargin="0" leftmargin="0" marginheight="0" marginwidth="0" rightmargin="0" topmargin="0">
 <center>
