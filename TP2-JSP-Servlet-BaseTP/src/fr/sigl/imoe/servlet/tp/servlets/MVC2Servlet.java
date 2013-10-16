@@ -27,9 +27,9 @@ import fr.sigl.imoe.servlet.tp.dao.hibernate.HibernateDAOFactory;
  * Servlet permettant d'initialiser la liste des événements existant dans la
  * base de données.
  */
-@WebServlet(name = "ListingServlet", urlPatterns = { "/listing", "/show",
+@WebServlet(name = "MVC2Servlet", urlPatterns = { "/listing", "/show",
 		"/edit", "/delete/*", "/add", "/addEvent", "/editEvent" })
-public class ListingServlet extends HttpServlet {
+public class MVC2Servlet extends HttpServlet {
 	/**
 	 * Generated Serial Version UID.
 	 */
@@ -38,7 +38,7 @@ public class ListingServlet extends HttpServlet {
 	/**
 	 * Logger JUL.
 	 */
-	public static final Logger LOGGER = Logger.getLogger(ListingServlet.class
+	public static final Logger LOGGER = Logger.getLogger(MVC2Servlet.class
 			.getName());
 
 	/**
@@ -76,7 +76,7 @@ public class ListingServlet extends HttpServlet {
 			}
 
 			if (shortURI.startsWith("delete")) {
-				deleteEvent(response, projectName, shortURI);
+				deleteEvent(request, response, shortURI, projectName);
 			}
 
 			if (shortURI.equals("add")) {
@@ -97,9 +97,10 @@ public class ListingServlet extends HttpServlet {
 
 	}
 
-	private void deleteEvent(HttpServletResponse response, String projectName,
-			String shortURI) throws DAOConfigureException, DAORequestException,
-			IOException {
+	private void deleteEvent(HttpServletRequest request, 
+			HttpServletResponse response, String shortURI, String projectName)
+			throws ServletException, DAOConfigureException,
+			DAORequestException, IOException {
 		String id = shortURI.substring("delete/".length());
 		DAOFactory DAOFact = DAOFactory.getDAOFactory();
 		EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
@@ -108,6 +109,7 @@ public class ListingServlet extends HttpServlet {
 			EvenementDAO.deleteEvenement(event);
 		DAOFact.close();
 
+		request.setAttribute("message", "Événement supprimé");
 		response.sendRedirect(projectName + "listing");
 	}
 
@@ -120,7 +122,8 @@ public class ListingServlet extends HttpServlet {
 
 		request.setAttribute("eventList", events);
 
-		RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/accueil.jsp");
+		RequestDispatcher dispacher = getServletContext().getRequestDispatcher(
+				"/accueil.jsp");
 		dispacher.forward(request, response);
 		DAOFact.close();
 	}

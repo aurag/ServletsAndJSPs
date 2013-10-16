@@ -24,7 +24,7 @@ public class InitServlet extends HttpServlet {
 	/**
      * Logger JUL.
      */
-    public static final Logger LOGGER = Logger.getLogger(ListingServlet.class.getName());
+    public static final Logger LOGGER = Logger.getLogger(MVC2Servlet.class.getName());
 
 	/**
 	 * Méthode d'initialisation pour vérifier que le DAO est correctement configuré.
