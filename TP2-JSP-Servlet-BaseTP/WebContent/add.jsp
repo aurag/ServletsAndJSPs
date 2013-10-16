@@ -8,12 +8,16 @@
 <title>Création d'un nouvel évènement</title>
 </head>
 	<body>
+<h1>Création d'un nouvel évènement</h1>
 <% String error= (String) request.getAttribute("error"); %>
 <% if(error != null) { %>
     	<div class="alert alert-error">
     		${error}
     	</div>
 <% } %>
+
+		
+
 		<form name="registration" action="addEvent" method="Post"> 
 			Titre: <input type="text" name="title"> <br /> 
 			Type: 
@@ -51,3 +55,5 @@ $(function() {
 		</form>
 	</body>
 </html>
+
+<%@include file="includes/footer.jsp" %>

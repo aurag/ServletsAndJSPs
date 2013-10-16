@@ -66,3 +66,5 @@ $(function() {
 		</form>
 	</body>
 </html>
+
+<%@include file="includes/footer.jsp" %>
