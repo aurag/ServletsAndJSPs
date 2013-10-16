@@ -17,9 +17,44 @@
 			        <option value="${type.id}" ${type.id == event.type.id ? 'selected="selected"' : ''}><c:out value="${type.libelle}" /></option>
 			    </c:forEach>
 			</select>
-			Date début : <input type="text" name="start_date" value="${event.dateDebut}" /> 
-			Date fin : <input type="text" name="end_date" value="${event.dateFin}" /> 
-			Description: <input type="text" name="description" value="${event.description}" /> 
+			
+			<br/>
+			Date début : <script type="text/javascript">
+$(function() {
+    $("#debut").datepicker({
+    	language: "fr"
+    });
+});
+</script>
+
+
+<fmt:formatDate value="${event.dateDebut}"  
+                type="date" 
+                pattern="dd/MM/yyyy"
+                var="startDateFmt" />
+
+<input type="text" name="start_date" id="debut" class="date_input" value="${startDateFmt}" style="width:90px;" />
+<input type="text" name="start_date_hour" style="width:40px;" value="${event.dateDebut.getHours()}" /> h 
+<input type="text" name="start_date_min" style="width:40px;" value="${event.dateDebut.getMinutes()}"/> <br/>
+			Date fin : <script type="text/javascript">
+$(function() {
+    $("#fin").datepicker({
+    	language: "fr"
+    });
+});
+</script>
+
+<fmt:formatDate value="${event.dateDebut}"  
+                type="date" 
+                pattern="dd/MM/yyyy"
+                var="endDateFmt" />
+                
+<input type="text" name="end_date" id="fin" class="date_input" value="${endDateFmt}"  style="width:90px;"/>
+<input type="text" name="end_date_hour"  style="width:40px;" value="${event.dateFin.getHours()}"/> h 
+<input type="text" name="end_date_min" style="width:40px;" value="${event.dateFin.getMinutes()}"/><br/> 
+			
+			
+			Description: <input type="text" name="description" value="${event.description}" /> <br/>
 			<input type="hidden" name="id" value="${event.id}" />
 			<input type="submit" value="Submit" /> 
 		</form>

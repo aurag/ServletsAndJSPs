@@ -2,6 +2,8 @@ package fr.sigl.imoe.servlet.tp.servlets;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -47,6 +49,7 @@ public class ListingServlet extends HttpServlet {
      * @throws IOException          Exception générique d'entrée / sortie.
      * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
+	@SuppressWarnings("deprecation")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String projectName = "/TP2-JSP-Servlet-BaseTP/";
 		String shortURI = request.getRequestURI().substring(projectName.length());
@@ -128,8 +131,19 @@ public class ListingServlet extends HttpServlet {
 			{
 				String title = request.getParameter("title");
 				String type = request.getParameter("type");
-				Timestamp start_date = Timestamp.valueOf(request.getParameter("start_date"));
-				Timestamp end_date = Timestamp.valueOf(request.getParameter("end_date"));
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				Date startDate = formatter.parse(request.getParameter("start_date"));
+				startDate.setHours(Integer.parseInt(request.getParameter("start_date_hour")));
+				startDate.setMinutes(Integer.parseInt(request.getParameter("start_date_min")));
+				
+				Date endDate = formatter.parse(request.getParameter("end_date"));
+				endDate.setHours(Integer.parseInt(request.getParameter("end_date_hour")));
+				endDate.setMinutes(Integer.parseInt(request.getParameter("end_date_min")));
+				
+				Timestamp start_date = new Timestamp(startDate.getTime());
+				Timestamp end_date = new Timestamp(endDate.getTime());
+				
+				
 				String description = request.getParameter("description");
 				
 				DAOFactory DAOFact = DAOFactory.getDAOFactory();
@@ -150,8 +164,21 @@ public class ListingServlet extends HttpServlet {
 			{
 				String title = request.getParameter("title");
 				String type = request.getParameter("type");
-				Timestamp start_date = Timestamp.valueOf(request.getParameter("start_date"));
-				Timestamp end_date = Timestamp.valueOf(request.getParameter("end_date"));
+				
+				try {
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				Date startDate = formatter.parse(request.getParameter("start_date"));
+				startDate.setHours(Integer.parseInt(request.getParameter("start_date_hour")));
+				startDate.setMinutes(Integer.parseInt(request.getParameter("start_date_min")));
+				
+				Date endDate = formatter.parse(request.getParameter("end_date"));
+				endDate.setHours(Integer.parseInt(request.getParameter("end_date_hour")));
+				endDate.setMinutes(Integer.parseInt(request.getParameter("end_date_min")));
+				
+				Timestamp start_date = new Timestamp(startDate.getTime());
+				Timestamp end_date = new Timestamp(endDate.getTime());
+				
 				String description = request.getParameter("description");
 				
 				DAOFactory DAOFact = DAOFactory.getDAOFactory();
@@ -168,6 +195,22 @@ public class ListingServlet extends HttpServlet {
 				
 				
 				response.sendRedirect(projectName + "listing");
+				}
+				catch (Exception e) {
+					String id = request.getParameter("id");
+					DAOFactory DAOFact = DAOFactory.getDAOFactory();
+					EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
+					Evenement event = EvenementDAO.getEvenement(id);
+					request.setAttribute("event", event);
+					
+					TypeEvenementDAO typeEvenementDAO = DAOFact.getTypeEvenementDAO();		
+					List<TypeEvenement> typeList = typeEvenementDAO.getTypesEvenements();
+			        request.setAttribute("typeList", typeList);
+			        DAOFact.close();
+			
+					RequestDispatcher dispacher = getServletContext().getRequestDispatcher("/edit.jsp");
+					dispacher.forward(request, response);
+				}
 			}
 		
 		} catch (Exception e) {
