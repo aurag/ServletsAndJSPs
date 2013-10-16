@@ -9,6 +9,12 @@
 </head>
 	<body>
 		<h1>Edition de l'évènement ${event.titre}</h1>
+<% String error= (String) request.getAttribute("error"); %>
+<% if(error != null) { %>
+    	<div class="alert alert-error">
+    		${error}
+    	</div>
+<% } %>
 		<form name="registration" action="editEvent" method="Post"> 
 			Titre: <input type="text" name="title" value="${event.titre}"> <br /> 
 			Type: 

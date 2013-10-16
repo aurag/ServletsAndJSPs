@@ -8,7 +8,12 @@
 <title>Création d'un nouvel évènement</title>
 </head>
 	<body>
-		size : ${typeList.size()}
+<% String error= (String) request.getAttribute("error"); %>
+<% if(error != null) { %>
+    	<div class="alert alert-error">
+    		${error}
+    	</div>
+<% } %>
 		<form name="registration" action="addEvent" method="Post"> 
 			Titre: <input type="text" name="title"> <br /> 
 			Type: 

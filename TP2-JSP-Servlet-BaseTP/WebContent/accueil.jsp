@@ -1,6 +1,18 @@
 <%@include file="includes/header.jsp" %>
 
 <center>
+<% String error= (String) request.getAttribute("error"); %>
+<% if(error != null) { %>
+    <div class="alert alert-error">
+    ${error}
+    </div>
+<% } %>
+<% String message= (String) request.getAttribute("message"); %>
+<% if(message != null) { %>
+ 	<div class="alert alert-success">
+    ${message}
+    </div>
+<% } %>
 <table border="1">
 	<tr>
 		<td><b>Titre</b></td>
