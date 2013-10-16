@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Création d'un nouvel évènement</title>
+<title>Création d'un événement</title>
 </head>
 	<body>
-<h1>Création d'un nouvel évènement</h1>
+<h1>Création d'un événement</h1>
 <% String error= (String) request.getAttribute("error"); %>
 <% if(error != null) { %>
     	<div class="alert alert-error">

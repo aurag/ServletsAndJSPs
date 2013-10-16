@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Edition d'un évènement</title>
+<title>Détail d'un événement</title>
 </head>
 	<body>
-		<h1>Détail de l'évènement ${event.titre}</h1>
+		<h1>Détail de ${event.titre}</h1>
 			Titre : ${event.titre} <br /> 
 			Type : ${event.type.libelle} <br /> 
 			Date début : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateDebut}" />  <br /> 
