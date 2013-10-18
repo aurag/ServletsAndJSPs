@@ -43,10 +43,11 @@ public class MVC2Servlet extends HttpServlet {
 
 	/**
 	 * Surcharge de la méthode service qui effectue les traitements
-	 * indépendamment du type de requète.
+
+	 * indépendamment du type de requête.
 	 * 
 	 * @param request
-	 *            La requète HTTP.
+	 *            La requête HTTP.
 	 * @param response
 	 *            La réponse HTTP.
 	 * @throws ServletException
@@ -96,7 +97,7 @@ public class MVC2Servlet extends HttpServlet {
 		}
 
 	}
-
+	
 	/**
 	 * 
 	 * Gère les requêtes de suppression d'un événement
@@ -155,13 +156,13 @@ public class MVC2Servlet extends HttpServlet {
 		DAOFactory DAOFact = DAOFactory.getDAOFactory();
 		EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
 		List<Evenement> events = EvenementDAO.getEvenements();
+		DAOFact.close();
 
 		request.setAttribute("eventList", events);
 
 		RequestDispatcher dispacher = getServletContext().getRequestDispatcher(
 				"/accueil.jsp");
 		dispacher.forward(request, response);
-		DAOFact.close();
 	}
 	
 	/**
@@ -185,13 +186,12 @@ public class MVC2Servlet extends HttpServlet {
 		DAOFactory DAOFact = DAOFactory.getDAOFactory();
 		EvenementDAO EvenementDAO = DAOFact.getEvenementDAO();
 		Evenement event = EvenementDAO.getEvenement(id);
-		request.setAttribute("event", event);
 		DAOFact.close();
+		request.setAttribute("event", event);
 
 		RequestDispatcher dispacher = getServletContext().getRequestDispatcher(
 				"/show.jsp");
 		dispacher.forward(request, response);
-		DAOFact.close();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -360,8 +360,9 @@ public class MVC2Servlet extends HttpServlet {
 
 		TypeEvenementDAO typeEvenementDAO = DAOFact.getTypeEvenementDAO();
 		List<TypeEvenement> typeList = typeEvenementDAO.getTypesEvenements();
-		request.setAttribute("typeList", typeList);
 		DAOFact.close();
+		request.setAttribute("typeList", typeList);
+
 
 		RequestDispatcher dispacher = getServletContext().getRequestDispatcher(
 				"/edit.jsp");
