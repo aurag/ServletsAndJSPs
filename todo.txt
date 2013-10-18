@@ -2,7 +2,5 @@
 ******************** TODO ********************
 **********************************************
 
-- JavaDoc
-- Commentaires
-- Modularité ?
-- Refactoring
+Rendre le projet.
+V2.0 ?
