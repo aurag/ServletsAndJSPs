@@ -97,6 +97,26 @@ public class MVC2Servlet extends HttpServlet {
 
 	}
 
+	/**
+	 * 
+	 * Gère les requêtes de suppression d'un événement
+	 * Redirige vers la page d'accueil
+	 * 
+	 * @param request
+	 *            La requète HTTP.
+	 * @param response
+	 *            La réponse HTTP.
+	 * @param shortURI
+	 *            La ressource requêtée.
+	 * @param projectName
+	 * 			  Le nom du projet présent à la racine de l'URL
+	 * @throws ServletException
+	 *             Exception générique pour le traitement de la servlet.
+	 * @throws IOException
+	 *             Exception générique d'entrée / sortie.
+	 * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
 	private void deleteEvent(HttpServletRequest request, 
 			HttpServletResponse response, String shortURI, String projectName)
 			throws ServletException, DAOConfigureException,
@@ -113,6 +133,22 @@ public class MVC2Servlet extends HttpServlet {
 		response.sendRedirect(projectName + "listing");
 	}
 
+	/**
+	 * 
+	 * Gère la page d'accueil
+	 * Liste les événement enregistrés
+	 * 
+	 * @param request
+	 *            La requète HTTP.
+	 * @param response
+	 *            La réponse HTTP.
+	 * @throws ServletException
+	 *             Exception générique pour le traitement de la servlet.
+	 * @throws IOException
+	 *             Exception générique d'entrée / sortie.
+	 * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
 	private void loadHomePage(HttpServletRequest request,
 			HttpServletResponse response) throws DAOConfigureException,
 			DAORequestException, ServletException, IOException {
@@ -127,7 +163,21 @@ public class MVC2Servlet extends HttpServlet {
 		dispacher.forward(request, response);
 		DAOFact.close();
 	}
-
+	
+	/**
+	 * Affiche le détail d'un événement
+	 * 
+	 * @param request
+	 *            La requète HTTP.
+	 * @param response
+	 *            La réponse HTTP.
+	 * @throws ServletException
+	 *             Exception générique pour le traitement de la servlet.
+	 * @throws IOException
+	 *             Exception générique d'entrée / sortie.
+	 * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
 	private void loadShowPage(HttpServletRequest request,
 			HttpServletResponse response) throws DAOConfigureException,
 			DAORequestException, ServletException, IOException {
@@ -189,7 +239,21 @@ public class MVC2Servlet extends HttpServlet {
 			loadAddPage(request, response);
 		}
 	}
-
+	
+	/**
+	 * Gère l'affichage de la page d'ajout d'événement
+	 * 
+	 * @param request
+	 *            La requète HTTP.
+	 * @param response
+	 *            La réponse HTTP.
+	 * @throws ServletException
+	 *             Exception générique pour le traitement de la servlet.
+	 * @throws IOException
+	 *             Exception générique d'entrée / sortie.
+	 * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
 	private void loadAddPage(HttpServletRequest request,
 			HttpServletResponse response) throws DAOConfigureException,
 			DAORequestException, ServletException, IOException {
@@ -204,6 +268,23 @@ public class MVC2Servlet extends HttpServlet {
 		dispacher.forward(request, response);
 	}
 
+	
+	/**
+	 * Gère la réception du formulaire d'édition d'un événemet 
+	 * 
+	 * @param request
+	 *            La requète HTTP.
+	 * @param response
+	 *            La réponse HTTP.
+	 * @param projectName
+	 * 			  Le nom du projet présent à la racine de l'URL
+	 * @throws ServletException
+	 *             Exception générique pour le traitement de la servlet.
+	 * @throws IOException
+	 *             Exception générique d'entrée / sortie.
+	 * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
 	@SuppressWarnings("deprecation")
 	private void validateEventEdition(HttpServletRequest request,
 			HttpServletResponse response, String projectName)
@@ -254,6 +335,20 @@ public class MVC2Servlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Gère l'affichage de la page d'ajout d'événement 
+	 * 
+	 * @param request
+	 *            La requète HTTP.
+	 * @param response
+	 *            La réponse HTTP.
+	 * @throws ServletException
+	 *             Exception générique pour le traitement de la servlet.
+	 * @throws IOException
+	 *             Exception générique d'entrée / sortie.
+	 * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
 	private void loadEditPage(HttpServletRequest request,
 			HttpServletResponse response) throws DAOConfigureException,
 			DAORequestException, ServletException, IOException {
